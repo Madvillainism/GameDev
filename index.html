@@ -3,13 +3,18 @@
   <head>
     <meta charset="utf-8" />
     <title>The whole idea</title>
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
+      crossorigin="anonymous"
+    />
   </head>
   <body>
     <div class="title-screen" id="title-screen">
       <h1>The whole idea</h1>
-      <h3>Made with love 愛  </h3>
+      <h3>Made with love 愛</h3>
       <button onclick="goSelect()" class="play-button">Fall into place</button>
     </div>
 
@@ -19,47 +24,77 @@
       <h2>Down Arrow ⬇ to brake</h2>
       <h2>Left/Right ⬅ ➡ to steer</h2>
 
+      <br />
+      <h3>AVOID LIGHT POLES</h3>
+      <br />
       <h3>Get crazy, crash into holes!</h3>
+      <br />
+      <h4>Press ESC to go back to main menu</h4>
+      <h4>Press P to pause the game</h4>
     </div>
 
     <div id="carousel" class="carousel slide">
       <h1>GARAGE</h1>
       <div class="carousel-inner">
         <div class="carousel-item active">
-          <img src="./redcar.png" class="d-block car-img" alt="Red Car">
+          <img src="./redcar.png" class="d-block car-img" alt="Red Car" />
           <h2>Carro rojo de Ramon</h2>
-          <button class="select-button" onclick="startGame(redCar)">Select</button>
+          <button class="select-button" onclick="startGame(redCar)">
+            Select
+          </button>
         </div>
 
         <div class="carousel-item">
-          <img src="./A.png" class="d-block car-img" alt="Altheus">
+          <img src="./A.png" class="d-block car-img" alt="Altheus" />
           <h2>Altheus</h2>
-          <button class="select-button" onclick="startGame(altheus)">Select</button>
+          <button class="select-button" onclick="startGame(altheus)">
+            Select
+          </button>
         </div>
 
         <div class="carousel-item">
-          <img src="./matiz.png" class="d-block car-img" alt="Altheus">
+          <img src="./matiz.png" class="d-block car-img" alt="Altheus" />
           <h2>Matiz Bumblebee</h2>
-          <button class="select-button" onclick="startGame(matiz)">Select</button>
+          <button class="select-button" onclick="startGame(matiz)">
+            Select
+          </button>
         </div>
-
       </div>
 
-      <button class="carousel-control-prev" type="button" data-bs-target="#carousel" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon arrow" aria-hidden="true"></span>
+      <button
+        class="carousel-control-prev"
+        type="button"
+        data-bs-target="#carousel"
+        data-bs-slide="prev"
+      >
+        <span
+          class="carousel-control-prev-icon arrow"
+          aria-hidden="true"
+        ></span>
         <span class="visually-hidden">Previous</span>
       </button>
 
-      <button class="carousel-control-next" type="button" data-bs-target="#carousel" data-bs-slide="next">
-        <span class="carousel-control-next-icon arrow" aria-hidden="true"></span>
+      <button
+        class="carousel-control-next"
+        type="button"
+        data-bs-target="#carousel"
+        data-bs-slide="next"
+      >
+        <span
+          class="carousel-control-next-icon arrow"
+          aria-hidden="true"
+        ></span>
         <span class="visually-hidden">Next</span>
       </button>
     </div>
-  
+
     <canvas id="myCanvas" width="400" height="800"></canvas>
-    
-    <script src="events.js">
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+
+    <script src="events.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+      crossorigin="anonymous"
+    ></script>
   </body>
 </html>

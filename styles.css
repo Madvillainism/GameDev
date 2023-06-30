@@ -1,117 +1,112 @@
 * {
-    padding: 0;
-    margin: 0;
-  }
+  padding: 0;
+  margin: 0;
+}
 
-  body{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  canvas {
-    display: none;
-    background-color: grey;
-    border: 2px groove goldenrod;  
-    position: relative;
-    top: 10px;
-    margin: 0 auto;
-    border: 2px solid black;
-  }
+body {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
 
-  .title-screen{
-    align-items: center;
-    background-image: url("./bg-image.jpg");
-    border: 2px groove silver;
-    border-radius: 15px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    height: 600px;
-    margin: 0 auto;
-    width: 600px;
-  }
+canvas {
+  display: none;
+  background-color: grey;
+  border: 2px groove goldenrod;
+  margin: 0 auto;
+  border: 2px solid black;
+  height: 100vh;
+  width: 40vw;
+}
 
-  .title-screen h1{
-    font-size: 70px;
-    font-weight: 800;
-    font-family:'Times New Roman', Times, serif ;
-    color: rgba(255, 0, 0);
-    box-shadow: 4px 10px 10px #000;
-    backdrop-filter: blur(5);
-    transition: all 1s ease;
-  }
+.title-screen {
+  align-items: center;
+  background-image: url("./bg-image.jpg");
+  border: 2px groove silver;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 600px;
+  margin: 0 auto;
+  width: 600px;
+}
 
-  .title-screen h3{
-    margin-bottom: 10px;
-    color: #fafafa;
+.title-screen h1 {
+  font-size: 70px;
+  font-weight: 800;
+  font-family: "Times New Roman", Times, serif;
+  color: rgba(255, 0, 0);
+  box-shadow: 4px 10px 10px #000;
+  backdrop-filter: blur(5);
+  transition: all 1s ease;
+}
 
-  }
+.title-screen h3 {
+  margin-bottom: 10px;
+  color: #fafafa;
+}
 
-  .play-button{
-    background-color: teal;
-    color: white;
-    border: 1px solid black;
-    height: 50px;
-    transition: all 1s ease;
-    width: 100px;
-  }
+.play-button {
+  background-color: teal;
+  color: white;
+  border: 1px solid black;
+  height: 50px;
+  transition: all 1s ease;
+  width: 100px;
+}
 
-  .play-button:hover{
-    margin: 5px;
-    transform: translateY(20px);
-    border-radius: 15px;
-    box-shadow: 0px 5px 2px #fff;
-    transition: all 1s ease;
-  }
+.play-button:hover {
+  margin: 5px;
+  transform: translateY(20px);
+  border-radius: 15px;
+  box-shadow: 0px 5px 2px #fff;
+  transition: all 1s ease;
+}
 
-  .how-to{
-    width: 200px;
-    margin: 0 auto;
-    padding: 10px;
-  }
+.how-to {
+  width: 400px;
+  margin: 0 auto;
+  padding: 10px;
+}
 
-  #carousel{
-    display: none;
-  }
+#carousel {
+  display: none;
+}
 
-  #carousel h1{
-    text-align: center;
-  }
+#carousel h1 {
+  text-align: center;
+}
 
-  .arrow{
-    color: #000;
-    background-color: #000;
-  }
+.arrow {
+  color: #000;
+  background-color: #000;
+}
 
-  .carousel-inner{
-    
-    height: 800px !important;
-    width: 400px !important;
-  }
+.carousel-inner {
+  height: 800px !important;
+  width: 400px !important;
+}
 
-  .car-img{
-    height: 450px;
-    width: 350px;
-    margin: 0 auto;
-  }
+.car-img {
+  height: 450px;
+  width: 350px;
+  margin: 0 auto;
+}
 
+.carousel-item {
+  width: 450px;
+  height: 800px;
+  text-align: center !important;
+  background-image: url("./garage.jpg");
+  background-repeat: no-repeat;
+}
 
-  .carousel-item{
-    
-    width: 450px;
-    height: 800px;
-    text-align: center !important;
-    background-image: url("./garage.jpg") ;
-    background-repeat: no-repeat;
-  }
-
-
-  .select-button{
-    background-color: #0fff0f;
-    border: 2px groove #000;
-    border-radius: 15px;
-    color: #000;
-    width: 60px;
-  }
+.select-button {
+  background-color: #0fff0f;
+  border: 2px groove #000;
+  border-radius: 15px;
+  color: #000;
+  width: 60px;
+}

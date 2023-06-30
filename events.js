@@ -3,7 +3,9 @@
 
 //HACER ESCAPE PARA VOLVER A TITLE SCREEN
 
-document.onload = () => {};
+document.onload = () => {
+  alert("made by: Carlos Perez");
+};
 
 const canvas = document.getElementById("myCanvas");
 
@@ -12,6 +14,18 @@ const ctx = canvas.getContext("2d");
 const titleScreen = document.getElementById("title-screen");
 const instructions = document.getElementById("how-to");
 const carSelect = document.getElementById("carousel");
+
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape" || event.key === "escape") {
+    pause = true;
+    start = true;
+    canvas.style.display = "none";
+    titleScreen.style.display = "flex";
+    instructions.style.display = "block";
+    bgMusic.pause();
+    garageMusic.pause();
+  }
+});
 
 function goSelect() {
   titleScreen.style.display = "none";
@@ -42,7 +56,7 @@ bgMusic.currentTime = 3; // audio at perfect point
 //CARROS DEL GARAGE
 let redCar = "redcar.png";
 let altheus = "A.png";
-let matiz = "matiz.png"
+let matiz = "matiz.png";
 //AÑADIR CARROS
 
 //Carro

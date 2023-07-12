@@ -1,11 +1,14 @@
 //Juego de carro vertical agarrando huecos
 //(cada hueco que se agarre son +100 puntos)
 
-//HACER ESCAPE PARA VOLVER A TITLE SCREEN
+//VARIABLES PARA PROPIEDADES DE CARROS
+/*
+Aceleracion 
+Max steering Angle (probar steering angle tambien)
+ySpeed (ponerle un cap con Math.Min)
+height/width
 
-document.onload = () => {
-  alert("made by: Carlos Perez");
-};
+*/
 
 const canvas = document.getElementById("myCanvas");
 
@@ -34,11 +37,12 @@ function goSelect() {
   garageMusic.play();
 }
 
+//MODIFICAR PARA PONER CANCIONES SEGUN EL CARRO QUE SE ELIJA
 function startGame(car) {
   carSelect.style.display = "none";
   garageMusic.pause();
   console.log(car);
-  //alert("The car is: " + car)
+  //asignar parametro de musica a bgMusic
   Carro.src = car;
   // Display the game canvas
   canvas.style.display = "block";
@@ -57,7 +61,7 @@ bgMusic.currentTime = 3; // audio at perfect point
 let redCar = "redcar.png";
 let altheus = "A.png";
 let matiz = "matiz.png";
-//AÑADIR CARROS
+//AÑADIR CARROS Y PROPIEDADES DE TAMAÑO, VELOCIDAD Y HANDLING
 
 //Carro
 let xCarro = canvas.width / 4;
@@ -67,6 +71,7 @@ let carHeight = 90;
 let ySpeed = 0;
 let acceleration = -0.1; // constant acceleration
 let steeringAngle = 0; // initial steering angle
+//MODIFICAR MAX STEERING ANGLE PARA HANDLING (Mayor numero, mas pesado)
 let maxSteeringAngle = Math.PI / 6; // maximum steering angle in radians
 const Carro = new Image();
 
@@ -127,6 +132,7 @@ function resetGame() {
   ySpeed = 0;
   acceleration = -0.1;
   steeringAngle = 0;
+  stripeSpeed = 5;
   maxSteeringAngle = Math.PI / 6;
 
   holeWidth = 80;
@@ -147,10 +153,13 @@ function resetGame() {
   bgMusic.play();
 }
 
+//let steeringReductionFactor = 0.1; // amount to reduce steering angle on each frame
+
 //Aceleracion y frenado
 function vroom() {
   ySpeed += acceleration;
   yCarro += ySpeed;
+
   if (yCarro > canvas.height - carHeight) {
     ySpeed = 0;
     acceleration = -0.1;
@@ -166,35 +175,42 @@ function vroom() {
     alert("GAME OVER, you crashed PIMPUMPAM");
     resetGame();
   }
+
   xCarro += ySpeed * Math.tan(steeringAngle); // update x position based on steering angle and y speed
   xCarro = Math.max(xCarro, 0); // prevent car from going off the left edge of the canvas
   xCarro = Math.min(xCarro, canvas.width - carWidth); // prevent car from going off the right edge of the canvas
 
-  stripePosition -= ySpeed; // update stripe position based on car speed
-  if (stripePosition < -40) {
-    stripePosition += 40; // wrap around when the stripes go off the top of the canvas
-  }
+  //stripePosition -= ySpeed; // update stripe position based on car speed
+  //if (stripePosition < -40) {
+  // stripePosition += 40; // wrap around when the stripes go off the top of the canvas
+  //}
 }
 
 document.addEventListener("keydown", (event) => {
   if (event.key === "ArrowUp") {
     acceleration = -0.2;
-    //engineStart.play(); // increase acceleration when up key is pressed
+    stripeSpeed += 1; //Fix to give sense of speed
+    //engineStart.play();
     vroom();
   } else if (event.key === "ArrowDown") {
-    acceleration = 0.2; // increase acceleration when up key is pressed
+    acceleration = 0.2;
   } else if (event.key === "ArrowLeft") {
-    steeringAngle = maxSteeringAngle;
+    let steeringFactor = 1 - ySpeed / 50;
+    let adjustedSteeringAngle = maxSteeringAngle * steeringFactor;
+    steeringAngle = adjustedSteeringAngle;
   } else if (event.key === "ArrowRight") {
-    steeringAngle = -maxSteeringAngle;
+    let steeringFactor = 1 - ySpeed / 50;
+    let adjustedSteeringAngle = maxSteeringAngle * steeringFactor;
+    steeringAngle = -adjustedSteeringAngle;
   }
 });
 
 document.addEventListener("keyup", (event) => {
   if (event.key === "ArrowUp" || event.key === "ArrowDown") {
     acceleration = -0.1; // reset acceleration when key is released
+    stripeSpeed = 5;
   } else if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
-    steeringAngle = 0; // reset steering angle when key is released
+    steeringAngle = 0;
   }
 });
 
@@ -223,16 +239,36 @@ function drawScore() {
 //Rayas de la calle
 
 let stripePosition = 0;
+let stripeSpeed = 5;
+const stripeHeight = 60; // define stripe height as a constant value
+const stripeGap = 10;
 
 function drawStripes() {
   ctx.fillStyle = "#fff"; // set the fill color to white
-  for (let i = stripePosition; i < canvas.height; i += 40) {
+  for (
+    let i =
+      -stripeHeight - stripeGap + (stripePosition % (stripeHeight + stripeGap));
+    i < canvas.height;
+    i += stripeHeight + stripeGap
+  ) {
+    //const y = ((i + stripePosition) % (stripeHeight + stripeGap)) - stripeGap;
     ctx.fillRect(canvas.width / 2 - 5, i, 10, 20); // draw a white rectangle
   }
   ctx.fillStyle = "#bdbf24"; // set the fill color to red
-  for (let i = stripePosition; i < canvas.height; i += 120) {
+  for (
+    let i =
+      -stripeHeight - stripeGap + (stripePosition % (stripeHeight + stripeGap));
+    i < canvas.height + stripeHeight;
+    i += stripeHeight + stripeGap
+  ) {
+    //const y = ((i + stripePosition) % (stripeHeight + stripeGap)) - stripeGap;
     ctx.fillRect(canvas.width / 2 - 5, i, 10, 60); // draw a red rectangle
   }
+
+  // stripePosition += ySpeed; // update stripe position based on car speed
+  /*if (stripePosition < -stripeHeight - stripeGap) {
+    stripePosition += stripeGap + stripeHeight; // wrap around when the stripes go off the top of the canvas
+  }*/
 }
 
 function holeSpawn() {
@@ -244,6 +280,7 @@ function holeSpawn() {
     if (score > 500) {
       holeWidth = 50;
       holeSpeed = 7;
+      stripeSpeed = 8;
     }
     //holeTouched = false;
     //console.log(holeTouched);
@@ -259,7 +296,7 @@ function poleSpawn() {
     xPost = Math.random() * (canvas.width - holeWidth);
     if (score > 500) {
       poleWidth = 90;
-      poleSpeed = 4;
+      poleSpeed = 5;
     }
     //holeTouched = false;
     //console.log(holeTouched);
@@ -356,14 +393,38 @@ function draw() {
       console.log("Obstacle loaded");
     };
 
-    stripePosition -= ySpeed; // update stripe position based on car speed
-    if (stripePosition < -40) {
-      stripePosition += 40; // wrap around when the stripes go off the top of the canvas
-    }
-
     drawStripes();
 
-    ctx.drawImage(Carro, xCarro, yCarro, carWidth, carHeight);
+    stripePosition += stripeSpeed;
+
+    // update stripe position based on car speed
+    /*if (stripePosition <= -stripeHeight) {
+      stripePosition += canvas.height + stripeHeight; // wrap around when the stripes go off the top of the canvas
+    }*/
+
+    //speed();
+
+    //ctx.drawImage(Carro, xCarro, yCarro, carWidth, carHeight);
+
+    const angle = -steeringAngle;
+    const w =
+      Math.abs(carWidth * Math.cos(angle)) +
+      Math.abs(carHeight * Math.sin(angle));
+    const h =
+      Math.abs(carHeight * Math.cos(angle)) +
+      Math.abs(carWidth * Math.sin(angle));
+
+    // Adjust the position of the car image based on its rotation angle
+    const x = xCarro + carWidth / 2 - w / 2;
+    const y = yCarro + carHeight / 2 - h / 2;
+
+    ctx.save();
+    ctx.translate(x + w / 2, y + h / 2);
+    ctx.rotate(angle);
+    ctx.drawImage(Carro, -w / 2, -h / 2, w, h);
+    ctx.rotate(-angle);
+    ctx.translate(-x - w / 2, -y - h / 2);
+    ctx.restore();
 
     ctx.drawImage(Hole, xHole, yHole, holeWidth, holeHeight);
 

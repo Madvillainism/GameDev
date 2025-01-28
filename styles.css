@@ -1,23 +1,125 @@
 * {
-  padding: 0;
-  margin: 0;
-}
-canvas {
-  background: #caaaaa;
-  display: block;
-  position: relative;
-  top: 200px;
-  margin: 0 auto;
-  border: 2px solid black;
-}
+    padding: 0;
+    margin: 0;
+  }
 
-#restart {
-  color: #fafafa;
-  background-color: #cc621b;
-  border: 2px groove silver;
-  box-shadow: 2px 2px 2px inset #000;
-  position: relative;
-  left: 200px;
-  height: 60px;
-  width: 60px;
-}
+  body{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    width: 100vw;
+  }
+  
+  canvas {
+    display: none;
+    background-color: grey;
+    border: 2px groove goldenrod;  
+    position: relative;
+    top: 10px;
+    margin: 0 auto;
+    border: 2px solid black;
+  }
+
+  .title-screen{
+    align-items: center;
+    background-image: url("./bg-image.jpg");
+    border: 2px groove silver;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 600px;
+    gap: 1em;
+    margin: 0 auto;
+    width: 600px;
+  }
+
+  .title-screen h1{
+    font-size: 70px;
+    font-weight: 800;
+    font-family:'Times New Roman', Times, serif ;
+    color: rgba(255, 0, 0);          
+  }
+
+  .title-screen h5{
+    margin-bottom: 10px;
+    color: #fafafa;
+  }
+
+  .play-button{
+    background-color: teal;
+    color: white;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 0.25em;
+    height: 50px;    
+    width: 120px;
+  }
+
+  .instructions-button{
+    background-color: #ef8456;
+    color: white;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 0.25em;
+    height: 50px;    
+    width: 120px;
+  }
+
+  .how-to-text{
+    height: 400px;
+    width: 400px;
+    background-color: #000;
+    color: #fff;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 1em;
+    margin: 0 auto;
+
+  }
+
+  #carousel{
+    display: none;
+  }
+
+  #carousel h1{
+    text-align: center;
+  }
+
+  .arrow{
+    color: #000;
+    background-color: #000;
+  }
+
+  .carousel-inner{
+    
+    height: 800px !important;
+    width: 400px !important;
+  }
+
+  .car-img{
+    height: 450px;
+    width: 350px;
+    margin: 0 auto;
+  }
+
+
+  .carousel-item{
+    
+    width: 450px;
+    height: 800px;
+    text-align: center !important;
+    background-image: url("./garage.jpg") ;
+    background-repeat: no-repeat;
+  }
+
+
+  .select-button{
+    background-color: #0fff0f;
+    border: 2px groove #000;
+    border-radius: 15px;
+    color: #000;
+    width: 60px;
+  }

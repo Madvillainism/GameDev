@@ -81,6 +81,16 @@ document.addEventListener("keydown", function (event) {
   }
 });
 
+document.addEventListener("keydown", function (event) {
+  if (event.key === "Escape" || event.key === "ESCAPE") {
+    pause = true;
+    titleScreen.style.display = "block";
+    carSelect.style.display = "none";
+    canvas.style.display = "none";
+    bgMusic.stop();
+  }
+});
+
 // Hueco para puntuar (uyqrico)
 // DIFICULTAD; AUMENTAR TAMAÑO DEL HUECO O VELOCIDAD
 let holeWidth = 70;

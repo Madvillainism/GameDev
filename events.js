@@ -20,23 +20,49 @@ const btnPause = document.getElementById("btn-pause");
 
 const inputState = { up: false, down: false, left: false, right: false };
 
+const VEHICLES = {
+  redCar: { src: "redcar.png", name: "Carro rojo de Ramon", width: 80, height: 90, accel: -0.2, maxSpeed: 8, handling: Math.PI / 6 },
+  altheus: { src: "A.png", name: "Altheus", width: 75, height: 85, accel: -0.25, maxSpeed: 10, handling: Math.PI / 5 },
+  matiz: { src: "matiz.png", name: "Matiz Bumblebee", width: 85, height: 95, accel: -0.15, maxSpeed: 6, handling: Math.PI / 4 },
+  moto: { src: "moto.png", name: "La Motora", width: 60, height: 70, accel: -0.3, maxSpeed: 12, handling: Math.PI / 3 }
+};
+
+let gameState = "title";
+let currentVehicle = null;
+
 function stopAudio(audio) {
   audio.pause();
   audio.currentTime = 0;
 }
 
 function triggerGameOver(title, message) {
-  pause = true;
+  gameState = "gameover";
   bgMusic.pause();
   gameOverTitle.textContent = title;
-  gameOverScore.textContent = message;
+  gameOverScore.textContent = "Score: " + score;
   gameOverOverlay.style.display = "flex";
 }
 
+function showScreen(screen) {
+  const screens = [titleScreen, carSelect, gameWrapper];
+  screens.forEach(s => { s.style.display = "none"; s.classList.remove("fade-in"); });
+  if (screen) {
+    screen.style.display = screen === gameWrapper ? "block" : screen === titleScreen ? "flex" : "block";
+    void screen.offsetWidth;
+    screen.classList.add("fade-in");
+  }
+}
+
 function goSelect() {
-  titleScreen.style.display = "none";
-  carSelect.style.display = "block";
+  showScreen(carSelect);
   garageMusic.play();
+}
+
+function backToTitle() {
+  stopAudio(garageMusic);
+  stopAudio(bgMusic);
+  gameOverOverlay.style.display = "none";
+  showScreen(titleScreen);
 }
 
 function goInstructions() {
@@ -51,12 +77,22 @@ closeInstructions.addEventListener("click", () => {
   instructionsDialog.close();
 });
 
-function startGame(car) {
+function startGame(carKey) {
+  currentVehicle = VEHICLES[carKey];
+  if (!currentVehicle) return;
+
   carSelect.style.display = "none";
   garageMusic.pause();
-  Carro.src = car;
-  gameWrapper.style.display = "block";
+
+  Carro.src = currentVehicle.src;
+  carWidth = currentVehicle.width;
+  carHeight = currentVehicle.height;
+  maxSteeringAngle = currentVehicle.handling;
+
+  gameState = "waiting";
+  showScreen(gameWrapper);
   canvas.style.display = "block";
+  bgMusic.currentTime = 3;
   bgMusic.play();
 }
 
@@ -71,10 +107,11 @@ const bgMusic = new Audio("bg-music.mp3");
 const garageMusic = new Audio("garage-music.mp3");
 bgMusic.currentTime = 3;
 
-let redCar = "redcar.png";
-let altheus = "A.png";
-let matiz = "matiz.png"
-let moto = "moto.png"
+const Carro = new Image();
+const Hole = new Image();
+Hole.src = "hole.png";
+const Pole = new Image();
+Pole.src = "pole.png";
 
 let xCarro = canvas.width / 4;
 let yCarro = canvas.height - 250;
@@ -84,67 +121,48 @@ let ySpeed = 0;
 let acceleration = -0.1;
 let steeringAngle = 0;
 let maxSteeringAngle = Math.PI / 6;
-const Carro = new Image();
-
-let pause = true;
-
-document.addEventListener("keydown", function (event) {
-  if (event.key === "p" || event.key === "P") {
-    pause = !pause;
-    start = null;
-  }
-});
-
-document.addEventListener("keydown", function (event) {
-  if (event.key === "Escape" || event.key === "ESCAPE") {
-    pause = true;
-    titleScreen.style.display = "block";
-    carSelect.style.display = "none";
-    canvas.style.display = "none";
-    gameWrapper.style.display = "none";
-    stopAudio(bgMusic);
-  }
-});
 
 let holeWidth = 70;
 let holeHeight = 70;
 let holeSpeed = 5;
 let xHole = Math.random() * (canvas.width - holeWidth);
 let yHole = -70;
-const Hole = new Image();
-Hole.src = "hole.png";
 
 let poleWidth = 80;
 let poleHeight = 70;
 let poleSpeed = 6;
 let xPost = Math.random() * (canvas.width - poleWidth + 5);
 let yPost = -80;
-const Pole = new Image();
-Pole.src = "pole.png";
 
 function drawPause() {
-  ctx.font = "16px Baskerville";
-  ctx.fillStyle = "#000";
-  ctx.fillText("PAUSED GAME", 50, canvas.height / 2);
+  ctx.fillStyle = "rgba(0, 0, 0, 0.6)";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.font = "22px Baskerville";
+  ctx.fillStyle = "#fff";
+  ctx.fillText("PAUSED", canvas.width / 2 - 50, canvas.height / 2 - 10);
+  ctx.font = "14px Baskerville";
+  ctx.fillText("Press P or tap ⏸ to resume", canvas.width / 2 - 100, canvas.height / 2 + 20);
 }
 
-let start = true;
-
 function drawStart() {
-  ctx.font = "16px Baskerville";
-  ctx.fillStyle = "#000";
-  ctx.fillText("PRESS P TO START ROLLING", 70, canvas.height / 2);
+  ctx.fillStyle = "rgba(0, 0, 0, 0.5)";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.font = "18px Baskerville";
+  ctx.fillStyle = "#fff";
+  ctx.fillText("PRESS P OR TAP ⏸ TO START", 50, canvas.height / 2);
 }
 
 function resetGame() {
+  if (currentVehicle) {
+    carWidth = currentVehicle.width;
+    carHeight = currentVehicle.height;
+    maxSteeringAngle = currentVehicle.handling;
+  }
   xCarro = canvas.width / 4;
   yCarro = canvas.height - 250;
-  carWidth = 80;
-  carHeight = 90;
   ySpeed = 0;
   acceleration = -0.1;
   steeringAngle = 0;
-  maxSteeringAngle = Math.PI / 6;
 
   holeWidth = 80;
   holeHeight = 70;
@@ -159,14 +177,18 @@ function resetGame() {
   yPost = -70;
 
   score = 0;
+  holeTouched = false;
+  setScore = false;
 
+  gameState = "waiting";
+  gameOverOverlay.style.display = "none";
   bgMusic.currentTime = 3;
   bgMusic.play();
 }
 
 function vroom() {
   if (inputState.up) {
-    acceleration = -0.2;
+    acceleration = currentVehicle ? currentVehicle.accel : -0.2;
   } else if (inputState.down) {
     acceleration = 0.2;
   } else {
@@ -182,6 +204,12 @@ function vroom() {
   }
 
   ySpeed += acceleration;
+
+  if (currentVehicle) {
+    if (ySpeed < -currentVehicle.maxSpeed) ySpeed = -currentVehicle.maxSpeed;
+    if (ySpeed > currentVehicle.maxSpeed * 0.5) ySpeed = currentVehicle.maxSpeed * 0.5;
+  }
+
   yCarro += ySpeed;
   if (yCarro > canvas.height - carHeight) {
     ySpeed = 0;
@@ -198,6 +226,7 @@ function vroom() {
     triggerGameOver("GAME OVER", "You crashed PIMPUMPAM!");
     resetGame();
   }
+
   xCarro += ySpeed * Math.tan(steeringAngle);
   xCarro = Math.max(xCarro, 0);
   xCarro = Math.min(xCarro, canvas.width - carWidth);
@@ -211,7 +240,7 @@ function vroom() {
 document.addEventListener("keydown", (event) => {
   if (event.key === "ArrowUp") {
     inputState.up = true;
-    vroom();
+    if (gameState === "playing" || gameState === "waiting") vroom();
   } else if (event.key === "ArrowDown") {
     inputState.down = true;
   } else if (event.key === "ArrowLeft") {
@@ -233,11 +262,34 @@ document.addEventListener("keyup", (event) => {
   }
 });
 
+document.addEventListener("keydown", function (event) {
+  if (event.key === "p" || event.key === "P") {
+    if (gameState === "waiting") {
+      gameState = "playing";
+    } else if (gameState === "playing") {
+      gameState = "paused";
+      bgMusic.pause();
+    } else if (gameState === "paused") {
+      gameState = "playing";
+      bgMusic.play();
+    }
+  }
+});
+
+document.addEventListener("keydown", function (event) {
+  if (event.key === "Escape" || event.key === "ESCAPE") {
+    if (gameState === "gameover") {
+      gameOverOverlay.style.display = "none";
+    }
+    backToTitle();
+  }
+});
+
 function bindTouchButton(btn, stateKey) {
   btn.addEventListener("touchstart", (e) => {
     e.preventDefault();
     inputState[stateKey] = true;
-    if (stateKey === "up") vroom();
+    if (stateKey === "up" && (gameState === "playing" || gameState === "waiting")) vroom();
   }, { passive: false });
 
   btn.addEventListener("touchend", (e) => {
@@ -258,8 +310,15 @@ bindTouchButton(btnRight, "right");
 
 btnPause.addEventListener("touchstart", (e) => {
   e.preventDefault();
-  pause = !pause;
-  start = null;
+  if (gameState === "waiting") {
+    gameState = "playing";
+  } else if (gameState === "playing") {
+    gameState = "paused";
+    bgMusic.pause();
+  } else if (gameState === "paused") {
+    gameState = "playing";
+    bgMusic.play();
+  }
 }, { passive: false });
 
 let score = 0;
@@ -270,28 +329,35 @@ function drawScore() {
   if (holeTouched) {
     ctx.font = "45px Baskerville";
     ctx.fillStyle = "#fafafa";
-    ctx.fillText("+100", 20, 20);
+    ctx.fillText("+100", 20, 60);
     setTimeout(() => {
-      ctx.clearRect(20, 20, 50, 35);
+      ctx.clearRect(20, 20, 100, 50);
       holeTouched = false;
     }, 1000);
   }
-  ctx.font = "45px Baskerville";
+  ctx.font = "22px Baskerville";
   ctx.fillStyle = "#fff";
-  ctx.fillText("Score: " + score, 150, 30);
+  ctx.fillText("Score: " + score, 150, 40);
 }
 
 let stripePosition = 0;
 
 function drawStripes() {
+  ctx.fillStyle = "#3a3a3a";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
   ctx.fillStyle = "#fff";
-  for (let i = stripePosition; i < canvas.height; i += 40) {
-    ctx.fillRect(canvas.width / 2 - 5, i, 10, 20);
-  }
-  ctx.fillStyle = "#bdbf24";
-  for (let i = stripePosition; i < canvas.height; i += 120) {
-    ctx.fillRect(canvas.width / 2 - 5, i, 10, 60);
-  }
+  ctx.fillRect(4, 0, 6, canvas.height);
+  ctx.fillRect(canvas.width - 10, 0, 6, canvas.height);
+
+  ctx.strokeStyle = "#fff";
+  ctx.lineWidth = 4;
+  ctx.setLineDash([24, 16]);
+  ctx.beginPath();
+  ctx.moveTo(canvas.width / 2, stripePosition);
+  ctx.lineTo(canvas.width / 2, canvas.height);
+  ctx.stroke();
+  ctx.setLineDash([]);
 }
 
 function holeSpawn() {
@@ -359,7 +425,6 @@ function detectHole() {
       yHole = -holeHeight;
       xHole = Math.random() * (canvas.width - holeWidth);
     }
-
     setScore = false;
   } else if (
     xCarro < xHole + holeWidth / 2 &&
@@ -382,22 +447,20 @@ function detectHole() {
 function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  if (pause === start) {
-    drawStart();
-    bgMusic.pause();
-  } else if (pause) {
-    drawPause();
-    bgMusic.pause();
-  } else {
-    bgMusic.play();
-
-    stripePosition -= ySpeed;
-    if (stripePosition < -40) {
-      stripePosition += 40;
-    }
-
+  if (gameState === "waiting") {
     drawStripes();
-
+    ctx.drawImage(Carro, xCarro, yCarro, carWidth, carHeight);
+    ctx.drawImage(Hole, xHole, yHole, holeWidth, holeHeight);
+    ctx.drawImage(Pole, xPost, yPost, poleWidth, poleHeight);
+    drawStart();
+  } else if (gameState === "paused") {
+    drawStripes();
+    ctx.drawImage(Carro, xCarro, yCarro, carWidth, carHeight);
+    ctx.drawImage(Hole, xHole, yHole, holeWidth, holeHeight);
+    ctx.drawImage(Pole, xPost, yPost, poleWidth, poleHeight);
+    drawPause();
+  } else if (gameState === "playing") {
+    drawStripes();
     ctx.drawImage(Carro, xCarro, yCarro, carWidth, carHeight);
     ctx.drawImage(Hole, xHole, yHole, holeWidth, holeHeight);
     ctx.drawImage(Pole, xPost, yPost, poleWidth, poleHeight);
@@ -411,6 +474,7 @@ function draw() {
     detectPole();
     detectHole();
   }
+
   requestAnimationFrame(draw);
 }
 

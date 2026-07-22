@@ -32,7 +32,6 @@
   canvas {
     display: none;
     background-color: grey;
-    border: 2px groove goldenrod;
     position: relative;
     top: 10px;
     margin: 0 auto;
@@ -75,6 +74,13 @@
     padding: 0.25em;
     height: 50px;
     width: 120px;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .play-button:hover {
+    transform: scale(1.08);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
   }
 
   .instructions-button{
@@ -85,6 +91,13 @@
     padding: 0.25em;
     height: 50px;
     width: 120px;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .instructions-button:hover {
+    transform: scale(1.08);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
   }
 
   .how-to-text{
@@ -96,15 +109,33 @@
     border-radius: 5px;
     padding: 1em;
     margin: 0 auto;
-
   }
 
   #carousel{
     display: none;
+    background: linear-gradient(180deg, #2a2a2a 0%, #1a1a1a 60%, #3d3d3d 100%);
+    border: 2px solid #555;
+    border-radius: 12px;
+    padding: 20px;
+    max-width: 480px;
+    width: 100%;
+    position: relative;
+  }
+
+  #carousel::after {
+    content: "";
+    display: block;
+    height: 8px;
+    background: repeating-linear-gradient(90deg, #666 0px, #666 20px, #444 20px, #444 40px);
+    border-radius: 0 0 10px 10px;
+    margin: 16px -20px -20px;
   }
 
   #carousel h1{
     text-align: center;
+    color: #f0c040;
+    text-shadow: 2px 2px 4px #000;
+    font-family: 'Times New Roman', Times, serif;
   }
 
   .arrow{
@@ -115,18 +146,61 @@
   .carousel-inner{
     height: 800px !important;
     width: 400px !important;
+    margin: 0 auto;
   }
 
   .car-img{
-    height: 450px;
-    width: 350px;
+    height: 350px;
+    width: 280px;
     margin: 0 auto;
+    object-fit: contain;
   }
 
   .carousel-item{
     width: 450px;
     height: 800px;
     text-align: center !important;
+  }
+
+  .carousel-item h2 {
+    color: #fff;
+    font-size: 22px;
+    margin-top: 8px;
+  }
+
+  .car-stats {
+    margin: 10px auto;
+    width: 260px;
+  }
+
+  .stat-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 4px;
+  }
+
+  .stat-row span {
+    color: #ccc;
+    font-size: 13px;
+    width: 50px;
+    text-align: right;
+    font-weight: 600;
+  }
+
+  .stat-bar {
+    flex: 1;
+    height: 10px;
+    background: #444;
+    border-radius: 5px;
+    overflow: hidden;
+  }
+
+  .stat-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #e74c3c, #f1c40f, #2ecc71);
+    border-radius: 5px;
+    transition: width 0.3s;
   }
 
   .select-button{
@@ -137,6 +211,34 @@
     color: #000;
     font-weight: 700;
     width: 70px;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    margin-top: 6px;
+  }
+
+  .select-button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 2px 10px rgba(218, 165, 32, 0.5);
+  }
+
+  .back-button {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    background: rgba(255, 255, 255, 0.15);
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    padding: 6px 14px;
+    font-size: 15px;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+    z-index: 10;
+  }
+
+  .back-button:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.05);
   }
 
   #touch-controls {
@@ -225,11 +327,25 @@
     user-select: none;
     -webkit-user-select: none;
     touch-action: manipulation;
-    transition: transform 0.1s;
+    transition: transform 0.1s, background 0.2s;
+  }
+
+  #game-over-restart:hover {
+    background: #e6b422;
+    transform: scale(1.05);
   }
 
   #game-over-restart:active {
     transform: scale(0.92);
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.96); }
+    to { opacity: 1; transform: scale(1); }
+  }
+
+  .fade-in {
+    animation: fadeIn 0.3s ease-out;
   }
 
   @media (max-width: 450px) {
@@ -246,7 +362,11 @@
     }
 
     .car-img {
-      height: 300px;
-      width: 250px;
+      height: 240px;
+      width: 200px;
+    }
+
+    .car-stats {
+      width: 200px;
     }
   }

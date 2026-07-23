@@ -100,15 +100,82 @@
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
   }
 
+  .how-to {
+    border: none;
+    border-radius: 16px;
+    padding: 0;
+    background: transparent;
+    max-width: 400px;
+    width: 90%;
+  }
+
+  .how-to::backdrop {
+    background: rgba(0, 0, 0, 0.7);
+  }
+
   .how-to-text{
-    height: 400px;
-    width: 400px;
-    background-color: #000;
+    background: linear-gradient(180deg, #2a2a2a 0%, #1a1a1a 100%);
     color: #fff;
-    border: 1px solid black;
-    border-radius: 5px;
-    padding: 1em;
+    border: 2px solid #555;
+    border-radius: 16px;
+    padding: 2em 1.5em;
     margin: 0 auto;
+    text-align: center;
+  }
+
+  .how-to-text h2 {
+    font-size: 28px;
+    font-weight: 800;
+    color: #f0c040;
+    margin-bottom: 20px;
+    font-family: 'Times New Roman', Times, serif;
+    text-shadow: 2px 2px 4px #000;
+  }
+
+  .how-to-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 8px 0;
+    font-size: 18px;
+    color: #ddd;
+  }
+
+  .how-to-row .key {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 48px;
+    padding: 4px 10px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 8px;
+    font-size: 18px;
+  }
+
+  .how-to-note {
+    margin: 16px 0 20px;
+    font-size: 15px;
+    color: #aaa;
+    font-style: italic;
+  }
+
+  #close-instructions {
+    background: goldenrod;
+    color: #000;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 32px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  #close-instructions:hover {
+    transform: scale(1.08);
+    box-shadow: 0 4px 16px rgba(218, 165, 32, 0.4);
   }
 
   #carousel{

@@ -38,8 +38,12 @@ function stopAudio(audio) {
 function triggerGameOver(title, message) {
   gameState = "gameover";
   bgMusic.pause();
+  if (score > highScore) {
+    highScore = score;
+  }
   gameOverTitle.textContent = title;
   gameOverScore.textContent = "Score: " + score;
+  gameOverHighscore.textContent = "High Score: " + highScore;
   gameOverOverlay.style.display = "flex";
 }
 
@@ -93,8 +97,11 @@ function startGame(carKey) {
   showScreen(gameWrapper);
   canvas.style.display = "block";
   bgMusic.currentTime = 3;
-  bgMusic.play();
 }
+
+const gameOverHighscore = document.getElementById("game-over-highscore");
+
+let highScore = 0;
 
 gameOverRestart.addEventListener("click", () => {
   gameOverOverlay.style.display = "none";
@@ -183,7 +190,6 @@ function resetGame() {
   gameState = "waiting";
   gameOverOverlay.style.display = "none";
   bgMusic.currentTime = 3;
-  bgMusic.play();
 }
 
 function vroom() {
@@ -266,6 +272,8 @@ document.addEventListener("keydown", function (event) {
   if (event.key === "p" || event.key === "P") {
     if (gameState === "waiting") {
       gameState = "playing";
+      bgMusic.currentTime = 3;
+      bgMusic.play();
     } else if (gameState === "playing") {
       gameState = "paused";
       bgMusic.pause();
@@ -312,6 +320,8 @@ btnPause.addEventListener("touchstart", (e) => {
   e.preventDefault();
   if (gameState === "waiting") {
     gameState = "playing";
+    bgMusic.currentTime = 3;
+    bgMusic.play();
   } else if (gameState === "playing") {
     gameState = "paused";
     bgMusic.pause();
@@ -329,15 +339,18 @@ function drawScore() {
   if (holeTouched) {
     ctx.font = "45px Baskerville";
     ctx.fillStyle = "#fafafa";
-    ctx.fillText("+100", 20, 60);
+    ctx.fillText("+100", 25, 80);
     setTimeout(() => {
-      ctx.clearRect(20, 20, 100, 50);
+      ctx.clearRect(20, 50, 120, 45);
       holeTouched = false;
     }, 1000);
   }
+  ctx.font = "14px Baskerville";
+  ctx.fillStyle = "#aaa";
+  ctx.fillText("Best: " + highScore, 20, 25);
   ctx.font = "22px Baskerville";
   ctx.fillStyle = "#fff";
-  ctx.fillText("Score: " + score, 150, 40);
+  ctx.fillText("Score: " + score, 150, 50);
 }
 
 function drawCar() {

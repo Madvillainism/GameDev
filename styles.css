@@ -312,7 +312,13 @@
 
   #game-over-overlay p {
     font-size: 24px;
-    margin-bottom: 24px;
+    margin-bottom: 16px;
+  }
+
+  #game-over-highscore {
+    font-size: 18px !important;
+    color: #f0c040 !important;
+    margin-bottom: 24px !important;
   }
 
   #game-over-restart {

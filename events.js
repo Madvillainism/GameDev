@@ -196,9 +196,11 @@ function vroom() {
   }
 
   if (inputState.left) {
-    steeringAngle = maxSteeringAngle;
+    let factor = Math.max(0.3, 1 - Math.abs(ySpeed) / 50);
+    steeringAngle = maxSteeringAngle * factor;
   } else if (inputState.right) {
-    steeringAngle = -maxSteeringAngle;
+    let factor = Math.max(0.3, 1 - Math.abs(ySpeed) / 50);
+    steeringAngle = -maxSteeringAngle * factor;
   } else {
     steeringAngle = 0;
   }
@@ -340,6 +342,19 @@ function drawScore() {
   ctx.fillText("Score: " + score, 150, 40);
 }
 
+function drawCar() {
+  const angle = -steeringAngle;
+  const w = Math.abs(carWidth * Math.cos(angle)) + Math.abs(carHeight * Math.sin(angle));
+  const h = Math.abs(carHeight * Math.cos(angle)) + Math.abs(carWidth * Math.sin(angle));
+  const x = xCarro + carWidth / 2 - w / 2;
+  const y = yCarro + carHeight / 2 - h / 2;
+  ctx.save();
+  ctx.translate(x + w / 2, y + h / 2);
+  ctx.rotate(angle);
+  ctx.drawImage(Carro, -w / 2, -h / 2, w, h);
+  ctx.restore();
+}
+
 let stripePosition = 0;
 
 function drawStripes() {
@@ -449,19 +464,19 @@ function draw() {
 
   if (gameState === "waiting") {
     drawStripes();
-    ctx.drawImage(Carro, xCarro, yCarro, carWidth, carHeight);
+    drawCar();
     ctx.drawImage(Hole, xHole, yHole, holeWidth, holeHeight);
     ctx.drawImage(Pole, xPost, yPost, poleWidth, poleHeight);
     drawStart();
   } else if (gameState === "paused") {
     drawStripes();
-    ctx.drawImage(Carro, xCarro, yCarro, carWidth, carHeight);
+    drawCar();
     ctx.drawImage(Hole, xHole, yHole, holeWidth, holeHeight);
     ctx.drawImage(Pole, xPost, yPost, poleWidth, poleHeight);
     drawPause();
   } else if (gameState === "playing") {
     drawStripes();
-    ctx.drawImage(Carro, xCarro, yCarro, carWidth, carHeight);
+    drawCar();
     ctx.drawImage(Hole, xHole, yHole, holeWidth, holeHeight);
     ctx.drawImage(Pole, xPost, yPost, poleWidth, poleHeight);
 

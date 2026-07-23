@@ -218,7 +218,6 @@ function vroom() {
     acceleration = -0.1;
     yCarro = canvas.height - carHeight;
     triggerGameOver("CUTUPLUN!", "You crashed into the bottom!");
-    resetGame();
   } else if (yCarro < 0) {
     ySpeed = 0;
     acceleration = -0.1;
@@ -226,7 +225,6 @@ function vroom() {
     bgMusic.pause();
     gameOver.play();
     triggerGameOver("GAME OVER", "You crashed PIMPUMPAM!");
-    resetGame();
   }
 
   xCarro += ySpeed * Math.tan(steeringAngle);
@@ -410,7 +408,6 @@ function detectPole() {
     bgMusic.pause();
     holeFall.play();
     triggerGameOver("CRASHHHH!!!!", "Quedaste a pie :C");
-    resetGame();
   } else if (
     xCarro < xPost + poleWidth / 2 &&
     xCarro + carWidth / 2 > xPost &&
@@ -420,7 +417,6 @@ function detectPole() {
     bgMusic.pause();
     holeFall.play();
     triggerGameOver("CRASHHHH!!!!", "Quedaste a pie :C");
-    resetGame();
   }
 }
 
@@ -474,6 +470,11 @@ function draw() {
     ctx.drawImage(Hole, xHole, yHole, holeWidth, holeHeight);
     ctx.drawImage(Pole, xPost, yPost, poleWidth, poleHeight);
     drawPause();
+  } else if (gameState === "gameover") {
+    drawStripes();
+    drawCar();
+    ctx.drawImage(Hole, xHole, yHole, holeWidth, holeHeight);
+    ctx.drawImage(Pole, xPost, yPost, poleWidth, poleHeight);
   } else if (gameState === "playing") {
     drawStripes();
     drawCar();

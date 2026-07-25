@@ -9,7 +9,7 @@
 
   body{
     display: flex;
-    background: linear-gradient(to right, #a94cc5, #a501f1);
+    background: linear-gradient(135deg, #1a0a2e 0%, #2d1b4e 50%, #16213e 100%);
     flex-direction: row;
     align-items: center;
     justify-content: center;
@@ -42,7 +42,7 @@
 
   .title-screen{
     align-items: center;
-    background-image: url("./bg-image.jpg");
+    background-image: url("./assets/backgrounds/bg-image.jpg");
     border: 2px groove silver;
     border-radius: 15px;
     display: flex;
@@ -58,7 +58,7 @@
     font-size: 70px;
     font-weight: 800;
     font-family:'Times New Roman', Times, serif ;
-    color: rgba(255, 0, 0);
+    color: #e85d5d;
   }
 
   .title-screen h5{
@@ -180,7 +180,7 @@
 
   #carousel{
     display: none;
-    background: linear-gradient(180deg, rgba(42,42,42,0.75) 0%, rgba(26,26,26,0.85) 60%, rgba(61,61,61,0.95) 100%), url("./garage.jpg") center / cover;
+    background: linear-gradient(180deg, rgba(42,42,42,0.75) 0%, rgba(26,26,26,0.85) 60%, rgba(61,61,61,0.95) 100%), url("./assets/backgrounds/garage.jpg") center / cover;
     border: 2px solid #555;
     border-radius: 12px;
     padding: 20px;

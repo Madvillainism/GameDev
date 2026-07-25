@@ -9,22 +9,32 @@ BoKetÉ is a vertical-scrolling arcade driving game where the player steers a ca
 - **CSS3** — All styling, layout, and responsive behavior.
 - **Bootstrap 5 bundle via CDN** — Only for the Garage carousel UI; no Bootstrap JS components beyond the carousel.
 
-## Asset Immutability
-The following media files MUST NOT be renamed, moved, modified, or re-exported:
+## Asset Organization
+Media files are organized under `assets/`:
 
-| Asset | Purpose |
-|-------|---------|
-| `redcar.png` | Player car sprite (default) |
-| `A.png` | Alternate car sprite |
-| `matiz.png` | Alternate car sprite |
-| `moto.png` | Alternate car sprite |
-| `hole.png` | Score-target hole sprite |
-| `pole.png` | Obstacle pole sprite |
-| `bg-image.jpg` | Title-screen background |
-| `explosion.wav` | Game-over sound effect |
-| `holefall.wav` | Collision sound effect |
-| `bg-music.mp3` | In-game background music |
-| `garageMusic.mp3` | Garage/menu music |
+```
+assets/
+├── sprites/          # Vehicle & obstacle sprites
+├── backgrounds/      # Title & garage backgrounds
+└── audio/            # Sound effects & music
+```
+
+| Asset | Path | Purpose |
+|-------|------|---------|
+| `redcar.png` | `assets/sprites/redcar.png` | Player car sprite (default) |
+| `A.png` | `assets/sprites/A.png` | Alternate car sprite |
+| `matiz.png` | `assets/sprites/matiz.png` | Alternate car sprite |
+| `moto.png` | `assets/sprites/moto.png` | Alternate car sprite |
+| `herbie.png` | `assets/sprites/herbie.png` | Alternate car sprite |
+| `hole.png` | `assets/sprites/hole.png` | Score-target hole sprite |
+| `pole.png` | `assets/sprites/pole.png` | Obstacle pole sprite |
+| `bg-image.jpg` | `assets/backgrounds/bg-image.jpg` | Title-screen background |
+| `garage.jpg` | `assets/backgrounds/garage.jpg` | Garage background |
+| `explosion.wav` | `assets/audio/explosion.wav` | Game-over sound effect |
+| `holefall.wav` | `assets/audio/holefall.wav` | Collision sound effect |
+| `bg-music.mp3` | `assets/audio/bg-music.mp3` | In-game background music |
+| `garage-music.mp3` | `assets/audio/garage-music.mp3` | Garage/menu music |
+| `herbie-horn.wav` | `assets/audio/herbie-horn.wav` | Herbie's random horn |
 
 ## Code Structure
 - `index.html` — Entry point; contains all DOM structure (title screen, garage carousel, canvas, touch controls, game-over modal).

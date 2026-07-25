@@ -21,10 +21,11 @@ const btnPause = document.getElementById("btn-pause");
 const inputState = { up: false, down: false, left: false, right: false };
 
 const VEHICLES = {
-  redCar: { src: "redcar.png", name: "Carro rojo de Ramon", width: 80, height: 90, accel: -0.2, maxSpeed: 8, handling: Math.PI / 6 },
-  altheus: { src: "A.png", name: "Altheus", width: 75, height: 85, accel: -0.25, maxSpeed: 10, handling: Math.PI / 5 },
-  matiz: { src: "matiz.png", name: "Matiz Bumblebee", width: 85, height: 95, accel: -0.15, maxSpeed: 6, handling: Math.PI / 4 },
-  moto: { src: "moto.png", name: "La Motora", width: 60, height: 70, accel: -0.3, maxSpeed: 12, handling: Math.PI / 3 }
+  redCar: { src: "assets/sprites/redcar.png", name: "Carro rojo de Ramon", width: 80, height: 90, accel: -0.2, maxSpeed: 8, handling: Math.PI / 6 },
+  altheus: { src: "assets/sprites/A.png", name: "Altheus", width: 75, height: 85, accel: -0.25, maxSpeed: 10, handling: Math.PI / 5 },
+  matiz: { src: "assets/sprites/matiz.png", name: "Matiz Bumblebee", width: 85, height: 95, accel: -0.15, maxSpeed: 6, handling: Math.PI / 4 },
+  moto: { src: "assets/sprites/moto.png", name: "La Motora", width: 60, height: 70, accel: -0.3, maxSpeed: 12, handling: Math.PI / 3 },
+  herbie: { src: "assets/sprites/herbie.png", name: "Herbie", width: 80, height: 90, accel: -0.2, maxSpeed: 8.5, handling: Math.PI / 5.5 }
 };
 
 let gameState = "title";
@@ -108,17 +109,19 @@ gameOverRestart.addEventListener("click", () => {
   resetGame();
 });
 
-const gameOver = new Audio("explosion.wav");
-const holeFall = new Audio("holefall.wav");
-const bgMusic = new Audio("bg-music.mp3");
-const garageMusic = new Audio("garage-music.mp3");
+const gameOver = new Audio("assets/audio/explosion.wav");
+const holeFall = new Audio("assets/audio/holefall.wav");
+const bgMusic = new Audio("assets/audio/bg-music.mp3");
+const garageMusic = new Audio("assets/audio/garage-music.mp3");
+const herbieHorn = new Audio("assets/audio/herbie-horn.wav");
+let hornCooldown = 0;
 bgMusic.currentTime = 3;
 
 const Carro = new Image();
 const Hole = new Image();
-Hole.src = "hole.png";
+Hole.src = "assets/sprites/hole.png";
 const Pole = new Image();
-Pole.src = "pole.png";
+Pole.src = "assets/sprites/pole.png";
 
 let xCarro = canvas.width / 4;
 let yCarro = canvas.height - 250;
@@ -502,6 +505,15 @@ function draw() {
 
     detectPole();
     detectHole();
+
+    if (currentVehicle === VEHICLES.herbie) {
+      hornCooldown--;
+      if (hornCooldown <= 0 && Math.random() < 0.008) {
+        herbieHorn.currentTime = 0;
+        herbieHorn.play();
+        hornCooldown = 480;
+      }
+    }
   }
 
   requestAnimationFrame(draw);

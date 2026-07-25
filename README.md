@@ -63,6 +63,7 @@ máxima, radio de giro y dimensiones en pista:
 | Altheus | `A.png` | –0.25 | 10 | π/5 | 75 | 85 |
 | Matiz Bumblebee | `matiz.png` | –0.15 | 6 | π/4 | 85 | 95 |
 | La Motora | `moto.png` | –0.30 | 12 | π/3 | 60 | 70 |
+| Herbie | `herbie.png` | –0.20 | 8.5 | π/5.5 | 80 | 90 |
 
 Las estadísticas se muestran visualmente en el garaje mediante barras
 (Speed / Accel / Turn) debajo de cada vehículo. El steering se escala
@@ -156,26 +157,32 @@ spec/
 │   ├── 001-responsive-viewport/  # Viewport + aspect-ratio locking
 │   ├── 002-touch-controls/       # Touch HUD binding spec
 │   └── 003-game-over-modal/      # DOM overlay spec
-└── AGENTS.md
+├── AGENTS.md
+assets/
+├── sprites/                      # Vehicle & obstacle PNGs
+├── backgrounds/                  # JPG backgrounds
+└── audio/                        # WAV/MP3 sound & music
 ```
 
 ---
 
-## 📦 Asset Inventory (Inmutables)
+## 📦 Asset Inventory
 
-Estos archivos no deben renombrarse, moverse, modificarse ni reexportarse:
+Todos los archivos multimedia se organizan bajo `assets/`:
 
-| File | Purpose |
-|------|---------|
-| `redcar.png` | Player car sprite (default) |
-| `A.png` | Alternate car sprite (Altheus) |
-| `matiz.png` | Alternate car sprite (Matiz) |
-| `moto.png` | Alternate car sprite (Moto) |
-| `hole.png` | Score-target hole sprite |
-| `pole.png` | Obstacle pole sprite |
-| `garage.jpg` | Garage background |
-| `bg-image.jpg` | Title-screen background |
-| `explosion.wav` | Game-over sound effect |
-| `holefall.wav` | Collision sound effect |
-| `bg-music.mp3` | In-game background music |
-| `garageMusic.mp3` | Garage/menu music |
+| File | Path | Purpose |
+|------|------|---------|
+| `redcar.png` | `assets/sprites/redcar.png` | Player car sprite (default) |
+| `A.png` | `assets/sprites/A.png` | Alternate car sprite (Altheus) |
+| `matiz.png` | `assets/sprites/matiz.png` | Alternate car sprite (Matiz) |
+| `moto.png` | `assets/sprites/moto.png` | Alternate car sprite (Moto) |
+| `herbie.png` | `assets/sprites/herbie.png` | Alternate car sprite (Herbie) |
+| `hole.png` | `assets/sprites/hole.png` | Score-target hole sprite |
+| `pole.png` | `assets/sprites/pole.png` | Obstacle pole sprite |
+| `garage.jpg` | `assets/backgrounds/garage.jpg` | Garage background |
+| `bg-image.jpg` | `assets/backgrounds/bg-image.jpg` | Title-screen background |
+| `explosion.wav` | `assets/audio/explosion.wav` | Game-over sound effect |
+| `holefall.wav` | `assets/audio/holefall.wav` | Collision sound effect |
+| `bg-music.mp3` | `assets/audio/bg-music.mp3` | In-game background music |
+| `garage-music.mp3` | `assets/audio/garage-music.mp3` | Garage/menu music |
+| `herbie-horn.wav` | `assets/audio/herbie-horn.wav` | Herbie's random horn |
